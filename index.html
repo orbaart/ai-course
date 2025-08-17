@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORBA ART SPACE – Zwischen Pinsel und Pixel</title>
+    
+    <!-- Google Font "Nunito" für eine freundlichere Typografie -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ------------------- */
+        /*  1. GRUNDEINSTELLUNGEN & NEUE FARBPALETTE */
+        /* ------------------- */
+        :root {
+            --color-tuerkis: #40e0d0;
+            --color-sand: #fffbeb; /* Ein sehr helles Sandgelb */
+            --color-pink: #ffb6c1; /* Zartes Rosa/Koralle */
+            --color-text: #4a4a4a; /* Weicherer Textfarbton */
+            --color-heading: #333;
+            --color-light: #ffffff;
+
+            --font-main: 'Nunito', sans-serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--color-text);
+            line-height: 1.7;
+            background-color: var(--color-light);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800; /* Extra Bold für einen verspielten Look */
+            color: var(--color-heading);
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 3.5rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        h2 { 
+            font-size: 2.5rem; 
+            margin-bottom: 2.5rem; 
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        /* Dekorativer Unterstrich für Überschriften */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-tuerkis);
+            border-radius: 2px;
+        }
+
+        h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--color-pink); }
+        p { margin-bottom: 1rem; }
+        a { color: var(--color-tuerkis); text-decoration: none; font-weight: 700; }
+        img { max-width: 100%; display: block; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            overflow: hidden; /* Verhindert, dass Elemente unschön überlappen */
+        }
+        
+        section:nth-of-type(odd) {
+            background-color: var(--color-sand);
+        }
+
+        /* ------------------- */
+        /*  2. NAVIGATIONSMENÜ */
+        /* ------------------- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .main-header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding: 0 2rem;
+        }
+
+        .nav-logo a {
+            color: var(--color-heading);
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-item a {
+            color: var(--color-heading);
+            font-weight: 700;
+            padding-bottom: 5px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-item a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--color-pink);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+
+        .nav-item a:hover {
+            color: var(--color-pink);
+        }
+        
+        .nav-item a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger { display: none; }
+        .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: var(--color-text); transition: all 0.3s ease-in-out; }
+
+        /* ------------------- */
+        /*  3. HERO-SEKTION & FUNKEL-EFFEKT */
+        /* ------------------- */
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-heading);
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        /* Kleiner funkelnder Detail-Effekt */
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white, 0 0 20px var(--color-tuerkis);
+            animation: sparkle 2s infinite;
+        }
+        .sparkle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 50%; left: 80%; animation-delay: 0.5s; }
+        .sparkle:nth-child(3) { top: 80%; left: 30%; animation-delay: 1s; }
+        .sparkle:nth-child(4) { top: 30%; left: 90%; animation-delay: 1.5s; }
+
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--color-tuerkis), var(--color-pink));
+            color: var(--color-light);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-7px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(64, 224, 208, 0.5);
+        }
+
+        /* ------------------- */
+        /*  4. ÜBER MICH / ABOUT */
+        /* ------------------- */
+        #about { background-color: var(--color-light); }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-photo img {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 8px solid var(--color-sand);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ------------------- */
+        /*  5. ANGEBOT / KURSE */
+        /* ------------------- */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .course-card {
+            background: var(--color-light);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .course-card-content {
+            padding: 2rem;
+        }
+
+
+        /* ------------------- */
+        /*  6. GALERIE */
+        /* ------------------- */
+        #gallery { background-color: var(--color-light); }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* ------------------- */
+        /*  7. KONTAKT */
+        /* ------------------- */
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--color-sand);
+            border-radius: 10px;
+            font-family: var(--font-main);
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--color-tuerkis);
+        }
+        
+        .submit-button {
+            display: inline-block;
+            background-color: var(--color-pink);
+            color: var(--color-light);
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            background-color: #ff9aab;
+            transform: scale(1.05);
+        }
+        
+        .contact-content { display: flex; gap: 3rem; align-items: flex-start; }
+        .contact-form-container { flex: 2; }
+        .contact-info-container { flex: 1; }
+
+        /* ------------------- */
+        /*  8. FOOTER */
+        /* ------------------- */
+        .main-footer {
+            background-color: var(--color-tuerkis);
+            color: var(--color-light);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .footer-links a { color: var(--color-light); margin: 0 0.5rem; }
+
+        /* ------------------- */
+        /*  9. RESPONSIVE DESIGN */
+        /* ------------------- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .hero-content h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            
+            section { padding: 4rem 0; }
+
+            .nav-menu { position: fixed; left: -100%; top: 80px; flex-direction: column; background-color: var(--color-light); width: 100%; text-align: center; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+            .nav-menu.active { left: 0; }
+            .nav-item { margin: 1.5rem 0; }
+            .hamburger { display: block; }
+            .hamburger.active .bar:nth-child(2) { opacity: 0; }
+            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            
+            .about-content { flex-direction: column; text-align: center; gap: 2rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .contact-content { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+        <nav class="navbar container">
+            <a href="#" class="nav-logo">ORBA ART</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#about">Über mich</a></li>
+                <li class="nav-item"><a href="#courses">Kurse</a></li>
+                <li class="nav-item"><a href="#gallery">Galerie</a></li>
+                <li class="nav-item"><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <!-- Sparkle-Effekte -->
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+
+            <div class="hero-content">
+                <h1>Orba Art Space – zwischen Pinsel und Pixel</h1>
+                <p class="subtitle">Persönlich. Innovativ. Inspiriert.</p>
+                <a href="#courses" class="cta-button">Jetzt entdecken</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container about-content">
+                <div class="about-photo">
+                    <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee8643?q=80&w=1887&auto=format&fit=crop" alt="Portrait der Künstlerin">
+                </div>
+                <div class="about-text">
+                    <h2>Über mich</h2>
+                    <p>Künstlerin und Lehrerin mit russischer Ausbildung und langjähriger Praxis in Deutschland.</p>
+                    <p>Hier trifft traditionelle Maltechnik auf die kreative Zukunft mit KI. Ich glaube fest daran, dass Kunst eine Brücke zwischen Welten schlägt – der analogen und der digitalen. Begleiten Sie mich auf dieser farbenfrohen Reise!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses">
+            <div class="container">
+                <h2>Kurse & Workshops</h2>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1505623774754-1f759c3a0429?q=80&w=2070&auto=format&fit=crop" alt="Lachende Kinder malen">
+                        <div class="course-card-content">
+                            <h3>Kunstkurse für Kinder</h3>
+                            <p>Spielerisch die Welt der Farben und Formen in unseren Kursen in Cottbus entdecken.</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1541316644383-dbf3a745915d?q=80&w=1887&auto=format&fit=crop" alt="Erwachsene malen mit Freude">
+                        <div class="course-card-content">
+                            <h3>Malkurse für Erwachsene</h3>
+                            <p>Egal ob Anfänger oder Fortgeschrittener, finden Sie Ihren kreativen Ausdruck live vor Ort.</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1678834431526-896a76a5b28d?q=80&w=2070&auto=format&fit=crop" alt="Fantasievolle KI-Kunst">
+                        <div class="course-card-content">
+                            <h3>Kreativ mit KI</h3>
+                            <p>Entdecken Sie in Online-Kursen, wie künstliche Intelligenz Ihre Kreativität beflügeln kann.</p>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop" alt="Menschen bei einem kreativen Event">
+                        <div class="course-card-content">
+                            <h3>Community & Events</h3>
+                            <p>Werden Sie Teil unserer Gemeinschaft. Austausch, Inspiration und besondere Veranstaltungen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="gallery">
+            <div class="container">
+                <h2>Galerie & Impressionen</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2071&auto=format&fit=crop" alt="Bunte Farbtuben"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1596464716127-f2a82131c938?q=80&w=2070&auto=format&fit=crop" alt="Hände mit Farbe"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1617865095335-a75b2a26c043?q=80&w=1887&auto=format&fit=crop" alt="Kreatives Chaos im Atelier"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2>Kontakt & Anmeldung</h2>
+                <div class="contact-content">
+                    <div class="contact-form-container">
+                        <form action="#" method="POST" class="contact-form">
+                            <div class="form-group" style="margin-bottom: 1.5rem;"><input type="text" id="name" name="name" placeholder="Dein Name" required></div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;"><input type="email" id="email" name="email" placeholder="Deine E-Mail" required></div>
+                            <div class="form-group" style="margin-bottom: 1.5rem;"><textarea id="message" name="message" placeholder="Deine Nachricht" rows="6" required></textarea></div>
+                            <button type="submit" class="submit-button">Senden</button>
+                        </form>
+                    </div>
+                    <div class="contact-info-container">
+                        <h3>Informationen</h3>
+                        <p>Haben Sie Fragen oder möchten sich für einen Kurs anmelden? Schreiben Sie mir gerne!</p>
+                        <p><strong>Adresse:</strong> Musterstraße 1, 03046 Cottbus</p>
+                        <p><strong>Instagram:</strong> <a href="#" target="_blank">@orba.art.space</a></p>
+                        <p><em>Bleib inspiriert! Melde dich für meinen Newsletter an für Neuigkeiten und kreative Impulse.</em></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Instagram</a> | <a href="#">Portfolio</a> | <a href="#">Impressum</a> | <a href="#">Datenschutz</a>
+            </div>
+            <p style="margin-top:1rem; opacity:0.8;">&copy; 2025 Orba Art Space. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        const header = document.getElementById('main-header');
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-item a").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }));
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+</body>
+</html>
